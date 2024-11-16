@@ -34,7 +34,7 @@ public class Main {
         String selectLabel = sb.toString();
 
         // Ask for the level
-        int level = Gets.getInt(selectLabel, Colors.toString("Invalid level, try again", Colors.RED), 1, 3);
+        int level = ConsoleGets.getInt(selectLabel, Colors.toString("Invalid level, try again", Colors.RED), 1, 3);
     }
 }
     
