@@ -13,21 +13,21 @@ public class ConsoleGets {
     */
     public static int getInt(String msg, String error, int min, int max) {
         int val;
-        try (Scanner scn = new Scanner(System.in)) {
-            while (true) {
-                System.out.println(msg);
-                if (scn.hasNextInt()) {
-                    val = scn.nextInt();
-                    // (-infinit, min) || (max, infinit)
-                    if (val < min || max < val) {
-                        System.out.println(error);
-                    } else {
-                        return val;
-                    }
-                } else {
-                    scn.next();
+        Scanner scn = new Scanner(System.in);
+
+        while (true) {
+            System.out.println(msg);
+            if (scn.hasNextInt()) {
+                val = scn.nextInt();
+                // (-infinito, min) || (max, infinito)
+                if (val < min || max < val) {
                     System.out.println(error);
+                } else {
+                    return val;
                 }
+            } else {
+                scn.next();
+                System.out.println(error);
             }
         }
     }
