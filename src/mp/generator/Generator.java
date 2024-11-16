@@ -1,28 +1,32 @@
 package mp.generator;
 
+import mp.grid.Cell;
 import java.util.ArrayList;
 
 public class Generator {
-    
-    public int[][] generateNonogram(int size) {
-        int[][] nonogram = new int[size][size];
+    public Cell[][] generateNonogram(int size) {
+        Cell[][] nonogram = new Cell[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                nonogram[i][j] = (int) (Math.random() * 2);
+                nonogram[i][j] = new Cell();
+                // Rand 50% chance
+                if (Math.random() < 0.5) {
+                    nonogram[i][j].mark();
+                }
             }
         }
         return nonogram;
     }
 
-    public int[][] generateHints(int[][] matrix, boolean isRowClues) {
+    public int[][] generateHints(Cell[][] matrix, boolean isRowClues) {
         int size = matrix.length;
         int[][] hints = new int[size][];
         for (int i = 0; i < size; i++) {
             ArrayList<Integer> hintsList = new ArrayList<>();
             int count = 0;
             for (int j = 0; j < size; j++) {
-                int cell = isRowClues ? matrix[i][j] : matrix[j][i];
-                if (cell == 1) {
+                boolean isFilled = isRowClues ? matrix[i][j].isCorrect() : matrix[j][i].isCorrect();
+                if (isFilled) {
                     count++;
                 } else if (count > 0) {
                     hintsList.add(count);
@@ -42,6 +46,5 @@ public class Generator {
         }
         return hints; 
     }
-
 }
 
