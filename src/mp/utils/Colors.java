@@ -181,6 +181,9 @@ public class Colors {
     public static final void hiprintln(Object s, String format) {
         System.out.println(format + HIGH_INTENSITY + s + RESTORE);
     }
+    public static final void hiprintln(Object s) {
+        System.out.println(HIGH_INTENSITY + s + RESTORE);
+    }
 
     /**
      * Imprime la cadena <code>s</code> con el formato dado. Imprime sin retorno de carro. Imprime con HIGH_INTENSITY.
@@ -190,6 +193,9 @@ public class Colors {
      */
     public static final void hiprint(Object s, String format) {
         System.out.print(format + HIGH_INTENSITY + s + RESTORE);
+    }
+    public static final void hiprint(Object s) {
+        System.out.print(HIGH_INTENSITY + s + RESTORE);
     }
 
     /**
@@ -294,5 +300,8 @@ public class Colors {
      */
     public static final String hiToString(Object s, String format){
         return (format + HIGH_INTENSITY + s + RESTORE);
+    }
+    public static final String hiToString(Object s){
+        return (HIGH_INTENSITY + s + RESTORE);
     }
 }

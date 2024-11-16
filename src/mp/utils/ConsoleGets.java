@@ -33,15 +33,14 @@ public class ConsoleGets {
     }
 
     /**
-    * Method to get an integer value from the user.
+    * Method to get an String value from the user.
     * 
     * @param msg Message to inform the user to enter a value.
-    * @return An integer value provided by the user.
+    * @return An string value provided by the user.
     */
     public static String getString(String mensaje) {
-        try (Scanner scn = new Scanner(System.in)) {
-            System.out.println(mensaje);
-            return scn.nextLine();
-        }
+        Scanner scn = new Scanner(System.in);
+        System.out.println(mensaje);
+        return scn.nextLine();
     }
 }
