@@ -27,6 +27,6 @@ public class Nonogram {
         this.nonogramSolution = generator.generateNonogram(this.size);
         this.verticalHints = generator.generateHints(this.nonogramSolution, false);
         this.horizontalHints = generator.generateHints(this.nonogramSolution, true);
-        this.nonogram = new int[this.size][this.size]; // Initialize the nonogram matrix with zeros
+        this.nonogram = new int[this.size][this.size]; 
     }
 }
