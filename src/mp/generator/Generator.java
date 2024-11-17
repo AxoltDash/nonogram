@@ -1,9 +1,11 @@
 package mp.generator;
 
-import mp.grid.Cell;
 import java.util.ArrayList;
 
+import mp.mappings.Cell;
+
 public class Generator {
+
     public Cell[][] generateNonogram(int size) {
         Cell[][] nonogram = new Cell[size][size];
         for (int i = 0; i < size; i++) {
@@ -11,21 +13,21 @@ public class Generator {
                 nonogram[i][j] = new Cell();
                 // Rand 50% chance
                 if (Math.random() < 0.5) {
-                    nonogram[i][j].mark();
+                    nonogram[i][j].setFilled();
                 }
             }
         }
         return nonogram;
     }
 
-    public int[][] generateHints(Cell[][] matrix, boolean isRowClues) {
-        int size = matrix.length;
+    public int[][] generateHints(Cell[][] nonogram, boolean isRowClues) {
+        int size = nonogram.length;
         int[][] hints = new int[size][];
         for (int i = 0; i < size; i++) {
             ArrayList<Integer> hintsList = new ArrayList<>();
             int count = 0;
             for (int j = 0; j < size; j++) {
-                boolean isFilled = isRowClues ? matrix[i][j].isCorrect() : matrix[j][i].isCorrect();
+                boolean isFilled = isRowClues ? nonogram[i][j].isFilled() : nonogram[j][i].isFilled();
                 if (isFilled) {
                     count++;
                 } else if (count > 0) {
