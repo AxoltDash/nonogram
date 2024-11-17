@@ -5,34 +5,42 @@ import mp.generator.Generator;
 public class Nonogram {
     // Matrices
     private Cell[][] nonogram;
-    private Cell[][] nonogramSolution;
     private int[][] horizontalHints;
     private int[][] verticalHints;
     private int size;
 
     public Nonogram(int size) {
         this.size = size;
+        generateNonogram();
     }
 
     public void generateNonogram() {
         Generator generator = new Generator();
-        this.nonogramSolution = generator.generateNonogram(this.size); // Generate the solution matrix
-        this.horizontalHints = generator.generateHints(this.nonogramSolution, true); // Hints for rows
-        this.verticalHints = generator.generateHints(this.nonogramSolution, false); // Hints for columns
-        this.nonogram = new Cell[this.size][this.size];
+        this.nonogram = generator.generateNonogram(this.size); // Generate the solution matrix
+        this.horizontalHints = generator.generateHints(this.nonogram, true); // Hints for rows
+        this.verticalHints = generator.generateHints(this.nonogram, false); // Hints for columns
+    }
+
+    public boolean markCell(int x, int y) {
+        return this.nonogram[x][y].mark();
+    }
+
+    public void askForHint() {
+    }
+
+    public boolean isSolved() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-                this.nonogram[i][j] = new Cell();
+                if (this.nonogram[i][j].isFilled() != this.nonogram[i][j].isMarked()) {
+                    return false;
+                }
             }
         }
+        return true;
     }
 
     public Cell[][] getNonogram() {
         return this.nonogram;
-    }
-
-    public Cell[][] getNonogramSolution() {
-        return this.nonogramSolution;
     }
 
     public int[][] getVerticalHints() {
@@ -43,6 +51,10 @@ public class Nonogram {
         return this.horizontalHints;
     }
 
+    public int getSize() {
+        return this.size;
+    }
+
     // ====================================================================================================
     // Test that needs to be removed
     // Print the nonogramSolution
@@ -50,7 +62,17 @@ public class Nonogram {
         System.out.println("Nonogram solution:");
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-                System.out.print(this.nonogramSolution[i][j].isFilled() ? "X" : ".");
+                System.out.print(this.nonogram[i][j].isFilled() ? "X" : ".");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printState() {
+        System.out.println("Nonogram state:");
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                System.out.print(this.nonogram[i][j].isMarked() ? "X" : ".");
             }
             System.out.println();
         }
