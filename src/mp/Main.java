@@ -1,7 +1,10 @@
 package mp;
 
 import mp.utils.*;
-import mp.game.GameTerminalMode;
+import mp.game.Game;
+import mp.mappings.Nonogram;
+
+import mp.game.view.TerminalMode;
 
 // =========================================================================
 //  __    _  _______  __    _  _______  _______  ______    _______  __   __ 
@@ -20,35 +23,10 @@ public class Main {
 
     public static void main(String[] args) {
         int option;
-        String dificultyLabel;
         String colorFormat = "";
 
         //Build a fancy String to show the options
-        StringBuilder sb = new StringBuilder();
-        sb.append(Colors.hiToString("Select a level (1, 2, or 3):", Colors.CYAN));
-        sb.append("\n");
-        for (int i = 1; i <= 4; i++) {
-            switch (i) {
-                case 1: colorFormat = Colors.GREEN;
-                    dificultyLabel = "Level Easy";
-                    break;
-                case 2: colorFormat = Colors.YELLOW; 
-                    dificultyLabel = "Level Medium";
-                    break;
-                case 3: colorFormat = Colors.RED; 
-                    dificultyLabel = "Level Hard (NO HINTS)";
-                    break;
-                default: colorFormat = Colors.BLUE; 
-                    dificultyLabel = "Leave";
-                    break;
-            }
-            sb.append(Colors.hiToString("["));
-            sb.append(Colors.hiToString((i <= 3) ? i : 0, colorFormat));
-            sb.append(Colors.hiToString("] - " + dificultyLabel + ((i <= 3) ? " (" + i*5 + " x " + i*5 + ")" : "")));
-            sb.append("\n");
-        }  
-        String menu = sb.toString(); 
-
+        String menu = TerminalMode.stringBuildMenu();
 
         // Print the title
         Colors.title("Welcome to NONOGRAM (Terminal mode)", Colors.CYAN, Colors.MAGENTA);
@@ -56,7 +34,7 @@ public class Main {
         // Ask player name
         String name = ConsoleGets.getString(Colors.hiToString("Enter your name: ", Colors.CYAN));
         
-        //Menu Loop Terminal MODE
+        //Menu LOOP
         do {
             // Ask for the level
             option = ConsoleGets.getInt(menu, Colors.toString("Invalid level, try again", Colors.RED), 0, 3);
@@ -65,6 +43,12 @@ public class Main {
                 case 1:
                     colorFormat = Colors.GREEN;
                     Colors.hiprintln("Level Easy", colorFormat);
+                    // Nonogram juego = new Nonogram(5);
+                    // juego.generateNonogram();
+                    // juego.mostrarEstado();
+                    // juego.printNonogramSolution();
+                    // juego.printVerticalHints();
+
                     break;
                 case 2:
                     colorFormat = Colors.YELLOW;
@@ -73,11 +57,6 @@ public class Main {
                 case 3:
                     colorFormat = Colors.RED;
                     Colors.hiprintln("Level Hard", colorFormat);
-
-                    Colors.hiprintln("_  _ ____ _  _ . ____ ____    ___  ____ ____ ___      .-.", colorFormat);
-                    Colors.hiprintln("\\_/  |  | |  | ' |__| |__/    |  \\ |___ |__| |  \\    (0.0)", colorFormat);
-                    Colors.hiprintln(" |   |__| |__|   |  | |  \\    |__/ |___ |  | |__/  '=.|m|.='", colorFormat);
-                    Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
                     break;
                 default:
                     Colors.hiprintln("Leave... ¡SEE YOU LATER!", Colors.BLUE);
@@ -85,7 +64,7 @@ public class Main {
             }
 
             if (option != 0) {
-                GameTerminalMode game = new GameTerminalMode(option*5, colorFormat, name);
+                Game game = new Game(option*5, colorFormat, name);
                 game.startGame();
             }
 
