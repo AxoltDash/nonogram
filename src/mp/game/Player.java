@@ -42,4 +42,10 @@ public class Player {
             this.lives--;
         }
     }
+
+    public void useHint() {
+        if (this.hints > 0) {
+            this.hints--;
+        }
+    }
 }
