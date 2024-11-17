@@ -44,8 +44,9 @@ public class Main {
                     Colors.hiprintln("Level Easy", colorFormat);
                     // Nonogram juego = new Nonogram(5);
                     // juego.generateNonogram();
-                    // juego.mostrarEstado();
+                    // juego.printState();
                     // juego.printNonogramSolution();
+                    // juego.printHorizontalHints();
                     // juego.printVerticalHints();
 
                     break;
