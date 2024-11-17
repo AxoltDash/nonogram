@@ -22,7 +22,7 @@ public class Game {
         //Terminal mode build
         this.terminal = new TerminalMode(hardMode, colorFormat);
         
-        startGame();
+        // startGame();
     }
 
     public void startGame() {
@@ -60,9 +60,11 @@ public class Game {
                     gameContinue = false;
                     break;
             }
+
             if (nonogram.isSolved()) {
                 gameContinue = false;
             }
+
         } while (gameContinue);
         terminal.printEndGame(player);
     }

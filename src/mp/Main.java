@@ -26,15 +26,15 @@ public class Main {
 
         //Build a fancy String to show the options
         String menu = TerminalMode.stringBuildMenu();
-
-        // Print the title
-        Colors.title("Welcome to NONOGRAM (Terminal mode)", Colors.CYAN, Colors.MAGENTA);
         
         // Ask player name
         String name = ConsoleGets.getString(Colors.hiToString("Enter your name: ", Colors.CYAN));
         
-        //Menu LOOP
+        //Main menu LOOP
         do {
+            // Print the title
+            Colors.title("Welcome to NONOGRAM (Terminal mode)", Colors.CYAN, Colors.MAGENTA);
+
             // Ask for the level
             option = ConsoleGets.getInt(menu, Colors.toString("Invalid level, try again", Colors.RED), 0, 3);
             Colors.hiprint("You select: ", Colors.CYAN);
@@ -42,13 +42,6 @@ public class Main {
                 case 1:
                     colorFormat = Colors.GREEN;
                     Colors.hiprintln("Level Easy", colorFormat);
-                    // Nonogram juego = new Nonogram(5);
-                    // juego.generateNonogram();
-                    // juego.printState();
-                    // juego.printNonogramSolution();
-                    // juego.printHorizontalHints();
-                    // juego.printVerticalHints();
-
                     break;
                 case 2:
                     colorFormat = Colors.YELLOW;
