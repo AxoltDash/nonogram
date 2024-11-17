@@ -68,9 +68,9 @@ public class TerminalMode {
         }
 
         if (marked) {
-            Colors.hiprint("Cell marked, Good job" + player.getName() + "!", colorFormat);
+            Colors.hiprint("Cell marked, Good job " + player.getName() + "!", colorFormat);
             if (n.isSolved()) {
-                Colors.hiprintln("Congratulations" + player.getName() + ", you have solved the nonogram!", colorFormat);
+                Colors.hiprintln("Congratulations " + player.getName() + ", you have solved the nonogram!", colorFormat);
                 return false;
             } else {
                 points = hollow ? 50 : 100;
@@ -107,8 +107,8 @@ public class TerminalMode {
 
     public int[] coords(int size){
         return ConsoleGets.getCoordinates(size,
-            Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\""+ Colors.hiToString("(x)", colorFormat), Colors.CYAN), 
-            Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\""+ Colors.hiToString("(y)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\" "+ Colors.hiToString("(columna)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\" "+ Colors.hiToString("(fila)", colorFormat), Colors.CYAN), 
             Colors.hiToString("Invalid coordinates, try again", Colors.RED));
     }
     
