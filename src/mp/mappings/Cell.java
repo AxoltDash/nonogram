@@ -1,4 +1,4 @@
-package mp.grid;
+package mp.mappings;
 
 public class Cell {
     private boolean isFilled; // [#] or [0]
@@ -17,7 +17,20 @@ public class Cell {
         return false;
     }
 
+    public void setFilled() {
+        isFilled = true;
+    }
+
     public boolean isCorrect() {
         return isFilled && isMarked;
     }
+
+    public boolean isFilled() {
+        return isFilled;
+    }
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
 }
