@@ -33,11 +33,13 @@ public class Game {
 
             switch (option) {
                 case -1:
-                    System.out.println("Developer mode activated, omg!");
+                    System.out.println("====================================\nDeveloper mode activated, omg!");
                     nonogram.printState();
                     nonogram.printNonogramSolution();
                     nonogram.printHorizontalHints();
                     nonogram.printVerticalHints();
+                    System.out.println("====================================");
+                    break;
                 case 1:
                     gameContinue = terminal.markCell(nonogram, player);    
                     break;
@@ -52,7 +54,8 @@ public class Game {
                     }
                     break;
                 default:
-                    return;
+                    gameContinue = false;
+                    break;
             }
             if (nonogram.isSolved()) {
                 gameContinue = false;

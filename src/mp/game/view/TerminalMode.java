@@ -142,7 +142,7 @@ public class TerminalMode {
                     break;
             }
             sb.append(Colors.hiToString("["));
-            sb.append(Colors.hiToString((i <= uwu) ? i : 0, this.colorFormat));
+            sb.append(Colors.hiToString((i <= uwu -1) ? i : 0, this.colorFormat));
             sb.append(Colors.hiToString("] - " + label));
             sb.append("\n");
         }  
