@@ -2,18 +2,112 @@ package mp.game.view;
 
 import mp.game.Player;
 import mp.mappings.Cell;
-import mp.utils.Colors;
+import mp.mappings.Nonogram;
+import mp.utils.*;
 
 public class TerminalMode {
-    
-    private int size;
     private String colorFormat;
     private String menu;
 
-    public TerminalMode (int size, String colorFormat) {
+    public TerminalMode (boolean hardMode, String colorFormat) {
         this.colorFormat = colorFormat;
-        this.size = size;
+        stringBuildMenuInGame(hardMode);
     }
+
+// _  _ ____ ___ _  _ ____ ___  ____ 
+// |\/| |___  |  |__| |  | |  \ [__  
+// |  | |___  |  |  | |__| |__/ ___]
+// ==================================
+
+    /*
+     * Method to show the menu and ask the user for an option.
+     * 
+     * @param hardMode Boolean to know if the game is in hard mode.
+     * @param n Nonogram object.
+     * @param player Player object.
+     * @return The option selected by the user.
+     */
+    public int showAndAsk (boolean hardMode, Nonogram n, Player player) {
+        printGameState(n, player);
+
+        // We obtain the option from the user
+        int option = ConsoleGets.getInt(
+            Colors.hiToString(menu, colorFormat), 
+            Colors.hiToString("Invalid option, try again", Colors.RED), 
+            0, hardMode ? 1 : 2);
+        
+        return option;
+    }
+
+    /*
+     * Method to mark a cell in the nonogram.
+     * 
+     * @param n Nonogram object.
+     * @param player Player object.
+     * @return A boolean to know if the game continues.
+     */
+    public boolean markCell(Nonogram n, Player player) {
+        int size = n.getSize();
+        
+        Colors.hiprintln("(If you put a \"0\", the action will be cancelated)", colorFormat);
+
+        // We obtain the coordinates from the user
+        int[] coordinates = ConsoleGets.getCoordinates(size,
+            Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\""+ Colors.hiToString("(x)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\""+ Colors.hiToString("(y)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Invalid coordinates, try again", Colors.RED));                
+
+        // If the user wants to cancel the action
+        if (coordinates[0] == 0 || coordinates[1] == 0) {
+            Colors.hiprintln("Action canceled", colorFormat);
+            return true;
+        }
+        
+        boolean marked = n.markCell(coordinates[0] - 1, coordinates[1] - 1);
+
+        if (marked) {
+            Colors.hiprint("Cell marked, Good job" + player.getName() + "!", colorFormat);
+            if (n.isSolved()) {
+                Colors.hiprintln("Congratulations" + player.getName() + ", you have solved the nonogram!", colorFormat);
+                return false;
+            } else {
+                Colors.hiprintln(" +100 points");
+                player.addScore(100);
+            }
+
+        } else {
+            Colors.hiprintln("Cell can't be marked, srry", colorFormat);
+            player.loseLife();
+            if (player.getLives() == 0) {
+                printDeadMessage();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /*
+     * Method to ask for a hint.
+     * 
+     * @param player Player object.
+     */
+    public void askForHint(Nonogram n, Player player) {
+        if (player.getHints() == 0) {
+            Colors.hiprintln("You don't have any hints left", colorFormat);
+        } else {
+            player.useHint();
+            if (n.askForHint()) {
+                Colors.hiprintln("Hint used, Good job" + player.getName() + "!", colorFormat);
+                if (n.isSolved()) {
+                    Colors.hiprintln("Congratulations" + player.getName() + ", you have solved the nonogram!", colorFormat);
+                }
+            } else {
+                Colors.hiprintln("Hint can't be used, don't have any cell to mark", colorFormat);
+            }
+
+        }
+    }
+    
 // ____ ___ ____ _ _  _ ____ ____ 
 // [__   |  |__/ | |\ | | __ [__  
 // ___]  |  |  \ | | \| |__] ___]
@@ -22,24 +116,25 @@ public class TerminalMode {
     /*
      * Method to build the menu for the game.
      * If the size of the nonogram is 5 or 10, the menu will have 3 options.
-     * Otherwise, the menu will have 2 options (HARD MODE).
+     * Otherwise, the menu will have 2 options (no hints).
      * 
+     * @param hardMode Boolean to know if the game is in hard mode.
      * @return A string with the menu.
      */
-    public void stringBuildMenuInGame() {
-        int x = 2;
+    public void stringBuildMenuInGame(boolean hardMode) {
+        int uwu = 3;
         String label;
         StringBuilder sb = new StringBuilder();
         
         sb.append(Colors.hiToString("Select an option:", Colors.CYAN));
         sb.append("\n");
-
-        if (size == 5 || size == 10) {
-            x = 3;
+        
+        if (hardMode) {
+            uwu = 2;
         }
 
-        for (int i = 1; i <= x; i++) {
-            if (i == 2 && x == 2){
+        for (int i = 1; i <= uwu; i++) {
+            if (i == 2 && hardMode){
                 i++;
             }
             switch (i) {
@@ -50,11 +145,11 @@ public class TerminalMode {
                     label = "Ask for a hint";
                     break;
                 default:
-                    label = "Leave";
+                    label = "Leave actual game";
                     break;
             }
             sb.append(Colors.hiToString("["));
-            sb.append(Colors.hiToString((i <= x) ? i : 0, this.colorFormat));
+            sb.append(Colors.hiToString((i <= uwu) ? i : 0, this.colorFormat));
             sb.append(Colors.hiToString("] - " + label));
             sb.append("\n");
         }  
@@ -66,33 +161,38 @@ public class TerminalMode {
 // |    |  \ | | \|  |  ___]   
 // ==========================
 
-    public void mostrarEstado(int[][] horizontalHints, int[][] verticalHints, Cell[][] nonogram, Player player) {
-        Colors.hiprint("Your avaliable lives are: ");
+    public void printGameState(Nonogram n, Player player) {
+        int size = n.getSize();
+        int[][] horizontalHints = n.getHorizontalHints();
+        int[][] verticalHints = n.getVerticalHints();
+        Cell[][] nonogram = n.getNonogram();
+
+        Colors.hiprint("Your available lives are: ");
         Colors.hiprintln(player.getLives() + " lives", colorFormat);
-        Colors.hiprint("Your avaliable hints are: ");
+        Colors.hiprint("Your available hints are: ");
         Colors.hiprintln(player.getHints() + " hints", colorFormat);
         
-        System.out.println("Estado del juego:");
-        // Encabezado de columnas
-        System.out.print("lalaa");
+        System.out.println("Game state:");
+        // Column headers
+        System.out.print("     ");
         for (int i = 1; i <= size; i++) {
-            System.out.printf("%3d", i); // Imprime el número de columna con un ancho fijo de 3 caracteres
+            System.out.printf("%3d", i); // Print column number with a fixed width of 3 characters
         }
         System.out.println();    
-        // Impresión de cada fila con sus pistas
+        // Print each row with its hints
         for (int i = 0; i < size; i++) {
-            System.out.printf("%3d | ", i + 1); // Imprime el número de fila con ancho fijo de 3 caracteres
+            System.out.printf("%3d | ", i + 1); // Print row number with a fixed width of 3 characters
             for (int j = 0; j < size; j++) {
                 Cell cell = nonogram[i][j];
-                System.out.print((cell.isMarked() ? "■" : cell.isFilled() ? "X" : ".") + "  "); // Espacio adicional para separación uniforme
+                System.out.print((cell.isMarked() ? "■" : cell.isFilled() ? "X" : ".") + "  "); // Additional space for uniform separation
             }
             System.out.print("| ");
             for (int p : horizontalHints[i]) {
-                System.out.printf("%2d ", p); // Imprime cada pista de fila con un ancho fijo de 2 caracteres
+                System.out.printf("%2d ", p); // Print each row hint with a fixed width of 2 characters
             }
             System.out.println();
         }    
-        // Separador y pistas de columnas
+        // Separator and column hints
         System.out.print("    ");
         for (int i = 0; i < size; i++) {
             System.out.print("----");
@@ -114,6 +214,15 @@ public class TerminalMode {
         Colors.hiprintln("\\_/  |  | |  | ' |__| |__/    |  \\ |___ |__| |  \\    (0.0)", colorFormat);
         Colors.hiprintln(" |   |__| |__|   |  | |  \\    |__/ |___ |  | |__/  '=.|m|.='", colorFormat);
         Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
+    }
+
+// ____ ____ ___ ____ ____ ____    ____ _  _ ___     ____ ____ ___ ____ ____ ____ 
+// | __ |___  |  |___ |__/ [__  __ |__| |\ | |  \ __ [__  |___  |  |___ |__/ [__  
+// |__] |___  |  |___ |  \ ___]    |  | | \| |__/    ___] |___  |  |___ |  \ ___]
+// ===============================================================================
+
+    public String getMenu() {
+        return menu;
     }
 
 // ____ ____ ____    _  _ ____ _ _  _    ____ _    ____ ____ ____ 
