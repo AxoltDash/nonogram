@@ -41,20 +41,18 @@ public class TerminalMode {
     /*
      * Method to mark a cell in the nonogram.
      * 
+     * @param hollow Boolean to know if you want to mark a cell or a hollow cell.
      * @param n Nonogram object.
      * @param player Player object.
      * @return A boolean to know if the game continues.
      */
-    public boolean markCell(Nonogram n, Player player) {
+    public boolean markCell(boolean hollow, Nonogram n, Player player) {
         int size = n.getSize();
-        
-        Colors.hiprintln("(If you put a \"0\", the action will be cancelated)", colorFormat);
+        int points;
 
+        Colors.hiprintln("(If you put a \"0\", the action will be cancelated)", colorFormat);
         // We obtain the coordinates from the user
-        int[] coordinates = ConsoleGets.getCoordinates(size,
-            Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\""+ Colors.hiToString("(x)", colorFormat), Colors.CYAN), 
-            Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\""+ Colors.hiToString("(y)", colorFormat), Colors.CYAN), 
-            Colors.hiToString("Invalid coordinates, try again", Colors.RED));                
+        int[] coordinates = coords(size);
 
         // If the user wants to cancel the action
         if (coordinates[0] == 0 || coordinates[1] == 0) {
@@ -62,7 +60,12 @@ public class TerminalMode {
             return true;
         }
         
-        boolean marked = n.markCell(coordinates[0] - 1, coordinates[1] - 1);
+        boolean marked;
+        if (hollow) {
+            marked = n.markCell(coordinates[0] - 1, coordinates[1] - 1);
+        } else {
+            marked = n.markHollowCell(coordinates[0] - 1, coordinates[1] - 1);
+        }
 
         if (marked) {
             Colors.hiprint("Cell marked, Good job" + player.getName() + "!", colorFormat);
@@ -70,8 +73,9 @@ public class TerminalMode {
                 Colors.hiprintln("Congratulations" + player.getName() + ", you have solved the nonogram!", colorFormat);
                 return false;
             } else {
-                Colors.hiprintln(" +100 points");
-                player.addScore(100);
+                points = hollow ? 50 : 100;
+                Colors.hiprintln(" +" + points + " points");
+                player.addScore(points);
             }
 
         } else {
@@ -99,6 +103,13 @@ public class TerminalMode {
         } else {
             Colors.hiprintln("Hint can't be used, don't have any cell to mark", colorFormat);
         }
+    }
+
+    public int[] coords(int size){
+        return ConsoleGets.getCoordinates(size,
+            Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\""+ Colors.hiToString("(x)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\""+ Colors.hiToString("(y)", colorFormat), Colors.CYAN), 
+            Colors.hiToString("Invalid coordinates, try again", Colors.RED));
     }
     
 // ____ ___ ____ _ _  _ ____ ____ 
@@ -177,7 +188,13 @@ public class TerminalMode {
             System.out.printf("%3d | ", i + 1); // Print row number with a fixed width of 3 characters
             for (int j = 0; j < size; j++) {
                 Cell cell = nonogram[i][j];
-                System.out.print((cell.isMarked() ? "■" : cell.isFilled() ? "X" : ".") + "  "); // Additional space for uniform separation
+                if (cell.isMarked()) {
+                    System.out.print("■  ");
+                } else if (cell.isHollowMarked()) {
+                    System.out.print("￭  ");
+                } else {
+                    System.out.print(".  ");
+                }
             }
             System.out.print("| ");
             for (int p : horizontalHints[i]) {

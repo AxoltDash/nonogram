@@ -27,6 +27,10 @@ public class Nonogram {
         return this.nonogram[x][y].mark();
     }
 
+    public boolean markHollowCell(int x, int y) {
+        return this.nonogram[x][y].markHollow();
+    }
+
     public boolean askForHint() {
         boolean hintFound = false;
         for (int i = 0; i < this.size - 1; i++) {
@@ -90,7 +94,7 @@ public class Nonogram {
         System.out.println("Nonogram state:");
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-                System.out.print(this.nonogram[i][j].isMarked() ? "X" : ".");
+                System.out.print(this.nonogram[i][j].isMarked() ? "X" : this.nonogram[i][j].isHollowMarked() ? "O" : ".");
             }
             System.out.println();
         }
