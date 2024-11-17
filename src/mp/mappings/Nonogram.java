@@ -1,5 +1,7 @@
 package mp.mappings;
 
+import java.util.Random;
+
 import mp.generator.Generator;
 
 public class Nonogram {
@@ -25,7 +27,23 @@ public class Nonogram {
         return this.nonogram[x][y].mark();
     }
 
-    public void askForHint() {
+    public boolean askForHint() {
+        boolean hintFound = false;
+        for (int i = 0; i < this.size - 1; i++) {
+            // random number between 0 and size - 1
+            int x = new Random().nextInt(this.size - 1);
+            int y = new Random().nextInt(this.size - 1);
+            
+            if (this.nonogram[x][y].isFilled() && !this.nonogram[x][y].isMarked()) {
+                this.nonogram[x][y].mark();
+                hintFound = true;
+                break;
+            }
+        }
+        if (!hintFound) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isSolved() {
