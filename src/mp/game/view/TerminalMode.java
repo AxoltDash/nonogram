@@ -215,15 +215,21 @@ public class TerminalMode {
         Colors.hiprintln("(,-.`._,'(       |\\`-/|");
         Colors.hiprintln("    `-.-' \\ )-`( , o o)");
         Colors.hiprintln("          `-    \\`_`\"'-");
+        Colors.hiprintln("-----------------------------------", colorFormat);
     }
 
     public void printEndGame(Player player) {
         Colors.hiprintln("|\\---/|", colorFormat);
         Colors.hiprintln("| ^_^ |   Thanks for PLAY \"" + player.getName() + "\" !!!", colorFormat);
-        Colors.hiprintln("\\_`_/-..----.", colorFormat);
-        Colors.hiprintln("___/ `   ' ,\"\"+ \\", colorFormat);
+        Colors.hiprintln(" \\_`_/-..----.", colorFormat);
+        Colors.hiprintln(" ___/ `   ' ,\"\"+ \\", colorFormat);
         Colors.hiprintln("(__...'   __\\    |`.___.';", colorFormat);
         Colors.hiprintln("(_,...'(_,.`__)/'.....+", colorFormat);
+        System.out.println();
+        Colors.hiprintln("Your score was: " + player.getScore()); 
+        Colors.hiprintln("Your lives were: " + player.getLives());
+        Colors.hiprintln("Your hints were: " + player.getHints());
+        Colors.hiprintln("-----------------------------------", colorFormat);
     }
 
 // ____ ____ ____    _  _ ____ _ _  _    ____ _    ____ ____ ____ 
