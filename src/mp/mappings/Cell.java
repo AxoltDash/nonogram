@@ -12,7 +12,7 @@ public class Cell {
     }
 
     public boolean mark() {
-        if (isFilled) {
+        if (isFilled && !isMarked) {
             isMarked = true;
             return true;
         }
@@ -20,7 +20,7 @@ public class Cell {
     }
 
     public boolean markHollow() {
-        if (!isFilled) {
+        if (!isFilled && !isHollowMarked) {
             isHollowMarked = true;
             return true;
         }
