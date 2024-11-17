@@ -1,8 +1,7 @@
 package mp.game.view;
 
 import mp.game.Player;
-import mp.mappings.Cell;
-import mp.mappings.Nonogram;
+import mp.mappings.*;
 import mp.utils.*;
 
 public class TerminalMode {
@@ -34,7 +33,7 @@ public class TerminalMode {
         int option = ConsoleGets.getInt(
             Colors.hiToString(menu, colorFormat), 
             Colors.hiToString("Invalid option, try again", Colors.RED), 
-            0, hardMode ? 1 : 2);
+            -1, hardMode ? 1 : 2);
         
         return option;
     }
@@ -91,20 +90,14 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
-    public void askForHint(Nonogram n, Player player) {
-        if (player.getHints() == 0) {
-            Colors.hiprintln("You don't have any hints left", colorFormat);
-        } else {
-            player.useHint();
-            if (n.askForHint()) {
-                Colors.hiprintln("Hint used, Good job" + player.getName() + "!", colorFormat);
-                if (n.isSolved()) {
-                    Colors.hiprintln("Congratulations" + player.getName() + ", you have solved the nonogram!", colorFormat);
-                }
-            } else {
-                Colors.hiprintln("Hint can't be used, don't have any cell to mark", colorFormat);
+    public void askForHint(Nonogram n) {    
+        if (n.askForHint()) {
+            Colors.hiprintln("Hint used! Cheeck the your Nonogram", colorFormat);
+            if (n.isSolved()) {
+                Colors.hiprintln("Congratulations, you have solved the nonogram with a HINT xd!", colorFormat);
             }
-
+        } else {
+            Colors.hiprintln("Hint can't be used, don't have any cell to mark", colorFormat);
         }
     }
     
@@ -216,13 +209,21 @@ public class TerminalMode {
         Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
     }
 
-// ____ ____ ___ ____ ____ ____    ____ _  _ ___     ____ ____ ___ ____ ____ ____ 
-// | __ |___  |  |___ |__/ [__  __ |__| |\ | |  \ __ [__  |___  |  |___ |__/ [__  
-// |__] |___  |  |___ |  \ ___]    |  | | \| |__/    ___] |___  |  |___ |  \ ___]
-// ===============================================================================
+    public void printNoHints() {
+        Colors.hiprint(" _._     _,-'\"\"`-._");
+        Colors.hiprintln("   - You don't have any hints!", colorFormat);
+        Colors.hiprintln("(,-.`._,'(       |\\`-/|");
+        Colors.hiprintln("    `-.-' \\ )-`( , o o)");
+        Colors.hiprintln("          `-    \\`_`\"'-");
+    }
 
-    public String getMenu() {
-        return menu;
+    public void printEndGame(Player player) {
+        Colors.hiprintln("|\\---/|", colorFormat);
+        Colors.hiprintln("| ^_^ |   Thanks for PLAY \"" + player.getName() + "\" !!!", colorFormat);
+        Colors.hiprintln("\\_`_/-..----.", colorFormat);
+        Colors.hiprintln("___/ `   ' ,\"\"+ \\", colorFormat);
+        Colors.hiprintln("(__...'   __\\    |`.___.';", colorFormat);
+        Colors.hiprintln("(_,...'(_,.`__)/'.....+", colorFormat);
     }
 
 // ____ ____ ____    _  _ ____ _ _  _    ____ _    ____ ____ ____ 
