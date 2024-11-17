@@ -41,9 +41,12 @@ public class Game {
                     System.out.println("====================================");
                     break;
                 case 1:
-                    gameContinue = terminal.markCell(nonogram, player);    
+                    gameContinue = terminal.markCell(false, nonogram, player);
                     break;
                 case 2:
+                    gameContinue = terminal.markCell(true, nonogram, player);
+                    break;
+                case 3:
                     if (!hardMode) {
                         if (player.getHints() > 0) {
                             player.useHint();

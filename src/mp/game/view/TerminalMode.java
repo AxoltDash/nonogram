@@ -33,7 +33,7 @@ public class TerminalMode {
         int option = ConsoleGets.getInt(
             Colors.hiToString(menu, colorFormat), 
             Colors.hiToString("Invalid option, try again", Colors.RED), 
-            -1, hardMode ? 1 : 2);
+            -1, hardMode ? 2 : 3);
         
         return option;
     }
@@ -62,9 +62,9 @@ public class TerminalMode {
         
         boolean marked;
         if (hollow) {
-            marked = n.markCell(coordinates[0] - 1, coordinates[1] - 1);
-        } else {
             marked = n.markHollowCell(coordinates[0] - 1, coordinates[1] - 1);
+        } else {
+            marked = n.markCell(coordinates[0] - 1, coordinates[1] - 1);
         }
 
         if (marked) {
@@ -126,19 +126,16 @@ public class TerminalMode {
      * @return A string with the menu.
      */
     public void stringBuildMenuInGame(boolean hardMode) {
-        int uwu = 3;
         String label;
         StringBuilder sb = new StringBuilder();
         
         sb.append(Colors.hiToString("Select an option:", Colors.CYAN));
         sb.append("\n");
-        
-        if (hardMode) {
-            uwu = 2;
-        }
+
+        int uwu = hardMode ? 3 : 4; // If hardMode is true, the menu will have 3 options, otherwise 4
 
         for (int i = 1; i <= uwu; i++) {
-            if (i == 2 && hardMode){
+            if (i == 3 && hardMode){
                 i++;
             }
             switch (i) {
@@ -146,6 +143,9 @@ public class TerminalMode {
                     label = "Mark a cell (x,y)";
                     break;
                 case 2:
+                    label = "Mark a cell like hollow (x,y)";
+                    break;
+                case 3:
                     label = "Ask for a hint";
                     break;
                 default:
