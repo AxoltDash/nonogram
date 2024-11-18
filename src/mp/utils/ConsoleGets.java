@@ -33,8 +33,8 @@ public class ConsoleGets {
     }
 
     public static int[] getCoordinates(int size, String rowMsg, String colMsg, String error) {
-        int x = getInt(rowMsg, error, 0, size);
-        int y = getInt(colMsg, error, 0, size);
+        int x = getInt(colMsg, error, 0, size);
+        int y = getInt(rowMsg, error, 0, size);
         return new int[] {x, y};
     }
 
