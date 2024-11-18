@@ -53,8 +53,48 @@ public class Nonogram {
         // Seleccionar una pista al azar de las posibles
         int[] hint = possibleHints.get(new Random().nextInt(possibleHints.size()));
         this.nonogram[hint[0]][hint[1]].mark();
+        fillCells(hint[0], hint[1]);
         
         return true;
+    }
+
+    public void fillCells(int row, int column) {
+        boolean filaCompleta = true;
+        boolean columnaCompleta = true;
+
+        // Check if the row is completely marked
+        for (int j = 0; j < size; j++) {
+            if (nonogram[row][j].isFilled() && !nonogram[row][j].isMarked()) {
+                filaCompleta = false;
+                break;
+            }
+        }
+
+        // If the row is complete, mark the rest of the cells as empty
+        if (filaCompleta) {
+            for (int j = 0; j < size; j++) {
+                if (!nonogram[row][j].isMarked()) {
+                    nonogram[row][j].markHollow();
+                }
+            }
+        }
+
+        // Check if the column is completely marked
+        for (int i = 0; i < size; i++) {
+            if (nonogram[i][column].isFilled() && !nonogram[i][column].isMarked()) {
+                columnaCompleta = false;
+                break;
+            }
+        }
+        
+        // If the column is complete, mark the rest of the cells as empty
+        if (columnaCompleta) {
+            for (int i = 0; i < size; i++) {
+                if (!nonogram[i][column].isMarked()) {
+                    nonogram[i][column].markHollow();
+                }
+            }
+        }
     }
 
     public boolean isSolved() {

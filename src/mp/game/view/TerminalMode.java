@@ -69,6 +69,7 @@ public class TerminalMode {
 
         if (marked) {
             Colors.hiprint("Cell marked, Good job " + player.getName() + "!", colorFormat);
+            n.fillCells(coordinates[0] - 1, coordinates[1] - 1);
             if (n.isSolved()) {
                 Colors.hiprintln("Congratulations " + player.getName() + ", you have solved the nonogram!", colorFormat);
                 return false;
@@ -77,6 +78,7 @@ public class TerminalMode {
                 Colors.hiprintln(" +" + points + " points");
                 player.addScore(points);
             }
+
 
         } else {
             Colors.hiprintln("Cell can't be marked, srry", colorFormat);
@@ -94,7 +96,7 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
-    public boolean askForHint(Nonogram n) {    
+    public boolean askForHint(Nonogram n) {  
         if (n.askForHint()) {
             Colors.hiprintln("Hint used! Cheeck the your Nonogram", colorFormat);
             if (n.isSolved()) {
@@ -107,6 +109,11 @@ public class TerminalMode {
         }
     }
 
+    /*
+     * Method to ask for the coordinates of a cell.
+     * 
+     * @param player Player object.
+     */
     public int[] coords(int size){
         return ConsoleGets.getCoordinates(size,
             Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\" "+ Colors.hiToString("(columna)", colorFormat), Colors.CYAN), 
@@ -167,6 +174,12 @@ public class TerminalMode {
 // |    |  \ | | \|  |  ___]   
 // ==========================
 
+    /*
+     * Method to print the game state.
+     * 
+     * @param n Nonogram object.
+     * @param player Player object.
+     */
     public void printGameState(Nonogram n, Player player) {
         int size = n.getSize();
         String line = Colors.hiToString("|", colorFormat);
@@ -184,15 +197,12 @@ public class TerminalMode {
         // Column headers
         System.out.print("\n    ");
         for (int i = 1; i <= size; i++) {
-            // String columnHeader = String.format("%3d", i); // Create column number string with a fixed width of 3 characters
-            // System.out.print(columnHeader); // Print the column number string
-
             Colors.hiprint(String.format("%3d", i));
         }
         System.out.println();    
+
         // Print each row with its hints
         for (int i = 0; i < size; i++) {
-            // System.out.printf("%3d " + line, i + 1); // Print row number with a fixed width of 3 characters
             Colors.hiprint(String.format("%3d " + line, i + 1));
 
             // Print each cell
@@ -212,7 +222,8 @@ public class TerminalMode {
                 System.out.printf("%2d ", p); // Print each row hint with a fixed width of 2 characters
             }
             System.out.println();
-        }    
+        }
+
         // Separator and column hints
         System.out.print("    ");
         for (int i = 0; i < size; i++) {
@@ -242,6 +253,9 @@ public class TerminalMode {
         System.out.println();
     }
 
+    /*
+     * Method to print a dead message.
+     */
     public void printDeadMessage() {
         Colors.hiprintln("_  _ ____ _  _ . ____ ____    ___  ____ ____ ___      .-.", colorFormat);
         Colors.hiprintln("\\_/  |  | |  | ' |__| |__/    |  \\ |___ |__| |  \\    (0.0)", colorFormat);
@@ -249,6 +263,9 @@ public class TerminalMode {
         Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
     }
 
+    /*
+     * Method to print a message when the user doesn't have any hints.
+     */
     public void printNoHints() {
         Colors.hiprint(" _._     _,-'\"\"`-._");
         Colors.hiprintln("   - You don't have any hints!", colorFormat);
@@ -258,6 +275,11 @@ public class TerminalMode {
         Colors.hiprintln("-----------------------------------", colorFormat);
     }
 
+    /*
+     * Method to print the end game message.
+     * 
+     * @param player Player object.
+     */
     public void printEndGame(Player player) {
         Colors.hiprintln("|\\---/|", colorFormat);
         Colors.hiprintln("| ^_^ |   Thanks for PLAY \"" + player.getName() + "\" !!!", colorFormat);
