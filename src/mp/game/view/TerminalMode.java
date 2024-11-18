@@ -167,36 +167,45 @@ public class TerminalMode {
 
     public void printGameState(Nonogram n, Player player) {
         int size = n.getSize();
+        String line = Colors.hiToString("|", colorFormat);
+
         int[][] horizontalHints = n.getHorizontalHints();
         int[][] verticalHints = n.getVerticalHints();
         Cell[][] nonogram = n.getNonogram();
 
+        System.out.println();
         Colors.hiprint("Your available lives are: ");
         Colors.hiprintln(player.getLives() + " lives", colorFormat);
         Colors.hiprint("Your available hints are: ");
         Colors.hiprintln(player.getHints() + " hints", colorFormat);
         
-        System.out.println("Game state:");
         // Column headers
-        System.out.print("     ");
+        System.out.print("\n    ");
         for (int i = 1; i <= size; i++) {
-            System.out.printf("%3d", i); // Print column number with a fixed width of 3 characters
+            // String columnHeader = String.format("%3d", i); // Create column number string with a fixed width of 3 characters
+            // System.out.print(columnHeader); // Print the column number string
+
+            Colors.hiprint(String.format("%3d", i));
         }
         System.out.println();    
         // Print each row with its hints
         for (int i = 0; i < size; i++) {
-            System.out.printf("%3d | ", i + 1); // Print row number with a fixed width of 3 characters
+            // System.out.printf("%3d " + line, i + 1); // Print row number with a fixed width of 3 characters
+            Colors.hiprint(String.format("%3d " + line, i + 1));
+
+            // Print each cell
             for (int j = 0; j < size; j++) {
                 Cell cell = nonogram[i][j];
                 if (cell.isMarked()) {
-                    System.out.print("■  ");
+                    Colors.hiprint(" ■ ");
                 } else if (cell.isHollowMarked()) {
-                    System.out.print("￭  ");
+                    Colors.hiprint(" / ");
                 } else {
-                    System.out.print(".  ");
+                    Colors.hiprint(" . ");
                 }
             }
-            System.out.print("| ");
+
+            System.out.print(line +" ");
             for (int p : horizontalHints[i]) {
                 System.out.printf("%2d ", p); // Print each row hint with a fixed width of 2 characters
             }
@@ -205,18 +214,30 @@ public class TerminalMode {
         // Separator and column hints
         System.out.print("    ");
         for (int i = 0; i < size; i++) {
-            System.out.print("----");
+            Colors.hiprint("---", colorFormat);
         }
-        System.out.println();    
-        System.out.print("     ");
-        for (int i = 0; i < size; i++) {
-            if (verticalHints[i].length > 0) {
-                System.out.printf("%2d ", verticalHints[i][0]);
-            } else {
-                System.out.print(" 0 ");
+        Colors.hiprint("--", colorFormat);
+        System.out.println();
+
+        // Print column hints
+        int uwu = 0;
+        for (int[] hints : verticalHints) {
+            if (hints.length > uwu) {
+                uwu = hints.length;
             }
         }
-        System.out.println("\n");
+        for (int i = 0; i < uwu; i++) {    
+            System.out.print("     ");
+            for (int j = 0; j < size; j++) {
+                if (i < verticalHints[j].length) {
+                    System.out.printf("%2d ", verticalHints[j][i]);
+                } else {
+                    System.out.print("   ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
     public void printDeadMessage() {
