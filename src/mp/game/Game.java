@@ -17,6 +17,7 @@ public class Game {
             this.hardMode = false;
         } else {
             this.hardMode = true;
+            player.setHints(0);
         }
 
         //Terminal mode build
@@ -33,12 +34,12 @@ public class Game {
 
             switch (option) {
                 case -1:
-                    System.out.println("====================================\nDeveloper mode activated, omg!");
+                    System.out.println("=== Developer mode activated, omg! ===");
                     nonogram.printState();
                     nonogram.printNonogramSolution();
                     nonogram.printHorizontalHints();
                     nonogram.printVerticalHints();
-                    System.out.println("====================================");
+                    System.out.println("======================================");
                     break;
                 case 1:
                     gameContinue = terminal.markCell(false, nonogram, player);
@@ -47,10 +48,12 @@ public class Game {
                     gameContinue = terminal.markCell(true, nonogram, player);
                     break;
                 case 3:
+                    // I know this is not the best way to do it :p
                     if (!hardMode) {
                         if (player.getHints() > 0) {
-                            player.useHint();
-                            terminal.askForHint(nonogram);
+                            if (terminal.askForHint(nonogram)) {
+                                player.useHint();
+                            }
                         } else {
                             terminal.printNoHints();
                         }
