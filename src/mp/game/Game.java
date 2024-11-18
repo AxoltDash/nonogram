@@ -48,9 +48,11 @@ public class Game {
 
             switch (option) {
                 case -1:
-                    System.out.println("=== Cheat activated, omg! ===");
-                    nonogram.printNonogramSolution();
-                    System.out.println("=============================");
+                    if ("admin".equals(player.getName())) {
+                        System.out.println("=== Cheat activated, omg! ===");
+                        nonogram.printNonogramSolution();
+                        System.out.println("=============================");
+                    }
                     break;
                 case 1:
                     gameContinue = terminal.markCell(false, nonogram, player);

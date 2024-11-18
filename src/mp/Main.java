@@ -28,12 +28,13 @@ public class Main {
         String menu = TerminalMode.stringBuildMenu();
         
         // Ask player name
+        Colors.println("If you want to be able to see the response of a Nonogram, you need to put your name as \"admin\" and within the game write the option \"-1\"", Colors.LOW_INTENSITY + Colors.CYAN);
         String name = ConsoleGets.getString(Colors.hiToString("Enter your name: ", Colors.CYAN));
         
         //Main menu LOOP
         do {
             // Print the title
-            Colors.title("Welcome to NONOGRAM (Terminal mode)", Colors.CYAN, Colors.MAGENTA);
+            Colors.title("Welcome to NONOGRAM \"" + name + "\" - (Terminal mode)", Colors.CYAN, Colors.MAGENTA);
 
             // Ask for the level
             option = ConsoleGets.getInt(menu, Colors.toString("Invalid level, try again", Colors.RED), 0, 3);
