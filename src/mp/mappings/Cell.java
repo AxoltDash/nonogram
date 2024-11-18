@@ -51,6 +51,9 @@ public class Cell {
     public void setFilled() {
         isFilled = true;
     }
+    public void setFilled(boolean filled) {
+        isFilled = filled;
+    }
 
     /**
      * Checks if the cell is filled.

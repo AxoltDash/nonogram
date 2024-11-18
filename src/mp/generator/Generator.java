@@ -1,6 +1,7 @@
 package mp.generator;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import mp.mappings.Cell;
 
@@ -8,6 +9,8 @@ import mp.mappings.Cell;
  * The Generator class generates a nonogram and its hints.
  */
 public class Generator {
+
+    private Random random = new Random();
 
     /**
      * Generates a nonogram of the specified size.
@@ -20,13 +23,57 @@ public class Generator {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 nonogram[i][j] = new Cell();
-                // Rand 50% chance
-                if (Math.random() < 0.5) {
-                    nonogram[i][j].setFilled();
+            }
+            generateResolvableLine(nonogram[i], size);
+        }
+        return nonogram;
+    }
+
+    /**
+     * Generates a resolvable line for the nonogram.
+     * 
+     * @param line The line to generate.
+     * @param size The size of the line.
+     */
+    private void generateResolvableLine(Cell[] line, int size) {
+        int filledCells = 0;
+        int segments = random.nextInt(size / 2) + 1; // Number of segments
+        int[] segmentSizes = new int[segments];
+        for (int i = 0; i < segments; i++) {
+            int maxSegmentSize = size - filledCells - (segments - i - 1);
+            if (maxSegmentSize <= 0) {
+                segmentSizes[i] = 1;
+            } else {
+                segmentSizes[i] = random.nextInt(maxSegmentSize) + 1;
+            }
+            filledCells += segmentSizes[i];
+        }
+
+        int emptyCells = size - filledCells;
+        int[] emptySpaces = new int[segments + 1];
+        for (int i = 0; i <= segments; i++) {
+            int maxEmptySpace = emptyCells - (segments - i);
+            if (maxEmptySpace <= 0) {
+                emptySpaces[i] = emptyCells - (segments - i - 1);
+            } else {
+                emptySpaces[i] = random.nextInt(maxEmptySpace) + 1;
+            }
+            emptyCells -= emptySpaces[i];
+        }
+        
+        int index = 0;
+        for (int i = 0; i < segments; i++) {
+            for (int j = 0; j < emptySpaces[i]; j++) {
+                if (index < size) {
+                    line[index++].setFilled(false);
+                }
+            }
+            for (int j = 0; j < segmentSizes[i]; j++) {
+                if (index < size) {
+                    line[index++].setFilled(true);
                 }
             }
         }
-        return nonogram;
     }
 
     /**
@@ -65,4 +112,3 @@ public class Generator {
         return hints; 
     }
 }
-
