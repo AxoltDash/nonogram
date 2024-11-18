@@ -23,78 +23,77 @@ public class Generator {
         Cell[][] nonogram = new Cell[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                nonogram[i][j] = new Cell(); // Initialize each cell
+                nonogram[i][j] = new Cell();
             }
         }
+
+        // Generate anchor columns
+        List<Integer> anchorColumns = new ArrayList<>();
+        for (int i = 0; i < size / 2; i++) {
+            anchorColumns.add(random.nextInt(size));
+        }
+
+        // Generate rows based on anchor columns
         for (int i = 0; i < size; i++) {
-            List<Integer> rowClues = generateClues(size);
-            fillRow(nonogram, i, rowClues);
+            generateRow(nonogram, i, size, anchorColumns);
         }
-        for (int j = 0; j < size; j++) {
-            List<Integer> colClues = generateClues(size);
-            fillColumn(nonogram, j, colClues);
-        }
+
         return nonogram;
     }
 
-    /**
-     * Generates clues that satisfy the immediate resolvability condition.
-     * 
-     * @param size The size of the row or column.
-     * @return The generated clues.
-     */
-    private List<Integer> generateClues(int size) {
-        List<Integer> clues = new ArrayList<>();
-        int remaining = size;
-        while (remaining > 0) {
-            // Genera una pista con un tamaño máximo de la mitad del tamaño restante
-            int maxClueSize = Math.max(1, remaining / 3);
-            int clue = random.nextInt(maxClueSize) + 1;
-            clues.add(clue);
-            remaining -= clue + 1; // Resta el tamaño de la pista y un espacio
-        }
-        return clues;
-    }
+    private void generateRow(Cell[][] nonogram, int row, int size, List<Integer> anchorColumns) {
+        int filledCells = 0;
+        List<Integer> blocks = new ArrayList<>();
 
-    /**
-     * Fills a row in the nonogram based on the given clues.
-     * 
-     * @param nonogram The nonogram to fill.
-     * @param rowIndex The index of the row to fill.
-     * @param clues    The clues for the row.
-     */
-    private void fillRow(Cell[][] nonogram, int rowIndex, List<Integer> clues) {
-        int colIndex = 0;
-        for (int clue : clues) {
-            for (int i = 0; i < clue; i++) {
-                nonogram[rowIndex][colIndex++].setFilled();
+        // Generate blocks for the row
+        while (filledCells < size) {
+            int maxBlockSize = Math.min(size - filledCells, size / 4); // Limit block size to a quarter of the row size
+            int blockSize = random.nextInt(maxBlockSize) + 1;
+            blocks.add(blockSize);
+            filledCells += blockSize + 1; // +1 for the space between blocks
+        }
+
+        // Adjust blocks to fit the row size
+        while (filledCells > size) {
+            int lastBlock = blocks.remove(blocks.size() - 1);
+            filledCells -= lastBlock + 1;
+        }
+
+        // Place blocks in the row
+        int currentPos = 0;
+        for (int block : blocks) {
+            for (int i = 0; i < block; i++) {
+                nonogram[row][currentPos++].setFilled();
             }
-            if (colIndex < nonogram.length) {
-                colIndex++; // Skip one cell for the space between blocks
+            if (currentPos < size) {
+                currentPos++; // Skip one cell for the space between blocks
             }
         }
-    }
 
-    /**
-     * Fills a column in the nonogram based on the given clues.
-     * 
-     * @param nonogram The nonogram to fill.
-     * @param colIndex The index of the column to fill.
-     * @param clues    The clues for the column.
-     */
-    private void fillColumn(Cell[][] nonogram, int colIndex, List<Integer> clues) {
-        int rowIndex = 0;
-        for (int clue : clues) {
-            for (int i = 0; i < clue; i++) {
-                nonogram[rowIndex++][colIndex].setFilled();
+        // Ensure anchor columns are not completely filled
+        for (int col : anchorColumns) {
+            if (nonogram[row][col].isFilled()) {
+                nonogram[row][col].setFilled(false);
             }
-            if (rowIndex < nonogram.length) {
-                rowIndex++; // Skip one cell for the space between blocks
+        }
+
+        // Ensure no column is completely filled or empty
+        for (int col = 0; col < size; col++) {
+            if (isColumnFull(nonogram, col, size)) {
+                nonogram[row][col].setFilled(false);
             }
         }
     }
 
-//=======================================================
+    private boolean isColumnFull(Cell[][] nonogram, int col, int size) {
+        int filledCount = 0;
+        for (int row = 0; row < size; row++) {
+            if (nonogram[row][col].isFilled()) {
+                filledCount++;
+            }
+        }
+        return filledCount == size;
+    }
 
     /**
      * Generates hints for the nonogram.
