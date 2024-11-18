@@ -20,7 +20,7 @@ public class Player {
         this.name = name;
         this.score = 0;
         this.lives = 3;
-        this.hints = 30;
+        this.hints = 3;
     }
 
     /**
