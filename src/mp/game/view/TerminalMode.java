@@ -6,10 +6,12 @@ import mp.utils.*;
 
 public class TerminalMode {
     private String colorFormat;
+    private String equalLine;
     private String menu;
 
     public TerminalMode (boolean hardMode, String colorFormat) {
         this.colorFormat = colorFormat;
+        this.equalLine = Colors.hiToString("-----------------------------------", colorFormat);
         stringBuildMenuInGame(hardMode);
     }
 
@@ -27,7 +29,7 @@ public class TerminalMode {
      * @return The option selected by the user.
      */
     public int showAndAsk (boolean hardMode, Nonogram n, Player player) {
-        printGameState(n, player);
+        printGameState(false, n, player);
 
         // We obtain the option from the user
         int option = ConsoleGets.getInt(
@@ -53,6 +55,8 @@ public class TerminalMode {
         Colors.hiprintln("(If you put a \"0\", the action will be cancelated)", colorFormat);
         // We obtain the coordinates from the user
         int[] coordinates = coords(size);
+
+        printEqualLine();
 
         // If the user wants to cancel the action
         if (coordinates[0] == 0 || coordinates[1] == 0) {
@@ -97,6 +101,7 @@ public class TerminalMode {
      * @param player Player object.
      */
     public boolean askForHint(Nonogram n) {  
+        printEqualLine();
         if (n.askForHint()) {
             Colors.hiprintln("Hint used! Cheeck the your Nonogram", colorFormat);
             if (n.isSolved()) {
@@ -108,12 +113,7 @@ public class TerminalMode {
             return false;
         }
     }
-
-    /*
-     * Method to ask for the coordinates of a cell.
-     * 
-     * @param player Player object.
-     */
+    
     public int[] coords(int size){
         return ConsoleGets.getCoordinates(size,
             Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\" "+ Colors.hiToString("(columna)", colorFormat), Colors.CYAN), 
@@ -174,13 +174,25 @@ public class TerminalMode {
 // |    |  \ | | \|  |  ___]   
 // ==========================
 
+    public void printStatus(Player player) {
+        Colors.hiprint("[%%] - ", colorFormat);
+        Colors.hiprint("Your current score is: ");
+        Colors.hiprintln(player.getScore() + " points", colorFormat);
+        Colors.hiprint("[<3] - ", colorFormat);
+        Colors.hiprint("Your available lives are: ");
+        Colors.hiprintln(player.getLives() + " lives", colorFormat);
+        Colors.hiprint("[¿?] - ", colorFormat);
+        Colors.hiprint("Your available hints are: ");
+        Colors.hiprintln(player.getHints() + " hints", colorFormat);
+    }
+
     /*
      * Method to print the game state.
      * 
      * @param n Nonogram object.
      * @param player Player object.
      */
-    public void printGameState(Nonogram n, Player player) {
+    public void printGameState(boolean isSolved, Nonogram n, Player player) {
         int size = n.getSize();
         String line = Colors.hiToString("|", colorFormat);
 
@@ -189,11 +201,11 @@ public class TerminalMode {
         Cell[][] nonogram = n.getNonogram();
 
         System.out.println();
-        Colors.hiprint("Your available lives are: ");
-        Colors.hiprintln(player.getLives() + " lives", colorFormat);
-        Colors.hiprint("Your available hints are: ");
-        Colors.hiprintln(player.getHints() + " hints", colorFormat);
         
+        if (!isSolved) {
+            printStatus(player);
+        }
+
         // Column headers
         System.out.print("\n    ");
         for (int i = 1; i <= size; i++) {
@@ -263,6 +275,9 @@ public class TerminalMode {
         Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
     }
 
+    public void printEqualLine() {
+        System.out.println(equalLine);
+    }
     /*
      * Method to print a message when the user doesn't have any hints.
      */
@@ -272,7 +287,8 @@ public class TerminalMode {
         Colors.hiprintln("(,-.`._,'(       |\\`-/|");
         Colors.hiprintln("    `-.-' \\ )-`( , o o)");
         Colors.hiprintln("          `-    \\`_`\"'-");
-        Colors.hiprintln("-----------------------------------", colorFormat);
+        printEqualLine();
+        
     }
 
     /*
@@ -280,9 +296,11 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
-    public void printEndGame(Player player) {
+    public void printEndGame(Nonogram n, Player player) {
+        printGameState(true, n, player);
+
         Colors.hiprintln("|\\---/|", colorFormat);
-        Colors.hiprintln("| ^_^ |   Thanks for PLAY \"" + player.getName() + "\" !!!", colorFormat);
+        Colors.hiprintln("| ^_^ |   Thanks for play \"" + player.getName() + "\" !!!", colorFormat);
         Colors.hiprintln(" \\_`_/-..----.", colorFormat);
         Colors.hiprintln(" ___/ `   ' ,\"\"+ \\", colorFormat);
         Colors.hiprintln("(__...'   __\\    |`.___.';", colorFormat);
@@ -291,7 +309,7 @@ public class TerminalMode {
         Colors.hiprintln("Your score was: " + player.getScore()); 
         Colors.hiprintln("Your lives were: " + player.getLives());
         Colors.hiprintln("Your hints were: " + player.getHints());
-        Colors.hiprintln("-----------------------------------", colorFormat);
+        printEqualLine();
     }
 
 // ____ ____ ____    _  _ ____ _ _  _    ____ _    ____ ____ ____ 

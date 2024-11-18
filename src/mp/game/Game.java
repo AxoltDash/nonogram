@@ -34,12 +34,9 @@ public class Game {
 
             switch (option) {
                 case -1:
-                    System.out.println("=== Developer mode activated, omg! ===");
-                    nonogram.printState();
+                    System.out.println("=== Cheat activated, omg! ===");
                     nonogram.printNonogramSolution();
-                    nonogram.printHorizontalHints();
-                    nonogram.printVerticalHints();
-                    System.out.println("======================================");
+                    System.out.println("=============================");
                     break;
                 case 1:
                     gameContinue = terminal.markCell(false, nonogram, player);
@@ -69,6 +66,6 @@ public class Game {
             }
 
         } while (gameContinue);
-        terminal.printEndGame(player);
+        terminal.printEndGame(nonogram, player);
     }
 }
