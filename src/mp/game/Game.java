@@ -3,12 +3,23 @@ package mp.game;
 import mp.game.view.TerminalMode;
 import mp.mappings.Nonogram;
 
+/**
+ * The Game class represents a game of Nonogram.
+ * It stores the player, nonogram, and terminal mode.
+ */
 public class Game {
     private boolean hardMode;
     private Player player;
     private TerminalMode terminal;
     private Nonogram nonogram;
 
+    /*
+     * Constructor
+     * 
+     * @param size        Size of the nonogram
+     * @param colorFormat Color format for the terminal
+     * @param name        Name of the player
+     */
     public Game(int size, String colorFormat, String name) {
         this.player = new Player(name);
         this.nonogram = new Nonogram(size);
@@ -26,6 +37,9 @@ public class Game {
         // startGame();
     }
 
+    /*
+     * Start the game
+     */
     public void startGame() {
         boolean gameContinue = true;
         int option;

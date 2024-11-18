@@ -32,6 +32,16 @@ public class ConsoleGets {
         }
     }
 
+    /**
+     * Method to get the coordinates of a cell in a grid.
+     * 
+     * @param size The size of the grid.
+     * @param rowMsg Message to inform the user to enter the row value.
+     * @param colMsg Message to inform the user to enter the column value.
+     * @param error Message to print in case an undesired value is given.
+     * 
+     * @return An array with the x and y coordinates of the cell.
+     */
     public static int[] getCoordinates(int size, String rowMsg, String colMsg, String error) {
         int x = getInt(colMsg, error, 0, size);
         int y = getInt(rowMsg, error, 0, size);

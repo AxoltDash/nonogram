@@ -4,8 +4,17 @@ import java.util.ArrayList;
 
 import mp.mappings.Cell;
 
+/**
+ * The Generator class generates a nonogram and its hints.
+ */
 public class Generator {
 
+    /**
+     * Generates a nonogram of the specified size.
+     * 
+     * @param size The size of the nonogram.
+     * @return The generated nonogram.
+     */
     public Cell[][] generateNonogram(int size) {
         Cell[][] nonogram = new Cell[size][size];
         for (int i = 0; i < size; i++) {
@@ -20,6 +29,13 @@ public class Generator {
         return nonogram;
     }
 
+    /**
+     * Generates hints for the nonogram.
+     * 
+     * @param nonogram   The nonogram to generate hints for.
+     * @param isRowClues True if generating row hints, false if generating column hints.
+     * @return The generated hints.
+     */
     public int[][] generateHints(Cell[][] nonogram, boolean isRowClues) {
         int size = nonogram.length;
         int[][] hints = new int[size][];

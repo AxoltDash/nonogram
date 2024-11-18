@@ -4,28 +4,39 @@ import mp.game.Player;
 import mp.mappings.*;
 import mp.utils.*;
 
+/**
+ * The TerminalMode class handles the terminal-based user interface for the Nonogram game.
+ * It provides methods to display the game state, show menus, and interact with the player.
+ */
 public class TerminalMode {
     private String colorFormat;
     private String equalLine;
     private String menu;
 
+    /**
+     * Constructor for TerminalMode.
+     * Initializes the terminal mode with the specified color format and builds the in-game menu.
+     * 
+     * @param hardMode Boolean to know if the game is in hard mode.
+     * @param colorFormat String representing the color format for terminal output.
+     */
     public TerminalMode (boolean hardMode, String colorFormat) {
         this.colorFormat = colorFormat;
         this.equalLine = Colors.hiToString("-----------------------------------", colorFormat);
         stringBuildMenuInGame(hardMode);
     }
 
-// _  _ ____ ___ _  _ ____ ___  ____ 
-// |\/| |___  |  |__| |  | |  \ [__  
-// |  | |___  |  |  | |__| |__/ ___]
-// ==================================
+    // _  _ ____ ___ _  _ ____ ___  ____ 
+    // |\/| |___  |  |__| |  | |  \ [__  
+    // |  | |___  |  |  | |__| |__/ ___]
+    // ==================================
 
-    /*
+    /**
      * Method to show the menu and ask the user for an option.
      * 
      * @param hardMode Boolean to know if the game is in hard mode.
-     * @param n Nonogram object.
-     * @param player Player object.
+     * @param n Nonogram object representing the current game state.
+     * @param player Player object representing the current player.
      * @return The option selected by the user.
      */
     public int showAndAsk (boolean hardMode, Nonogram n, Player player) {
