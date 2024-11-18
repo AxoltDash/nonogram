@@ -48,4 +48,8 @@ public class Player {
             this.hints--;
         }
     }
+
+    public void setHints(int hints) {
+        this.hints = hints;
+    }
 }

@@ -1,6 +1,8 @@
 package mp.mappings;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 import mp.generator.Generator;
 
@@ -32,21 +34,26 @@ public class Nonogram {
     }
 
     public boolean askForHint() {
-        boolean hintFound = false;
-        for (int i = 0; i < this.size - 1; i++) {
-            // random number between 0 and size - 1
-            int x = new Random().nextInt(this.size - 1);
-            int y = new Random().nextInt(this.size - 1);
-            
-            if (this.nonogram[x][y].isFilled() && !this.nonogram[x][y].isMarked()) {
-                this.nonogram[x][y].mark();
-                hintFound = true;
-                break;
+        List<int[]> possibleHints = new ArrayList<>();
+        
+        // Recopilar todas las celdas que cumplen con las condiciones
+        for (int x = 0; x < this.size; x++) {
+            for (int y = 0; y < this.size; y++) {
+                if (this.nonogram[x][y].isFilled() && !this.nonogram[x][y].isMarked()) {
+                    possibleHints.add(new int[]{x, y});
+                }
             }
         }
-        if (!hintFound) {
+        
+        // Si no hay posibles pistas, devolver false
+        if (possibleHints.isEmpty()) {
             return false;
         }
+        
+        // Seleccionar una pista al azar de las posibles
+        int[] hint = possibleHints.get(new Random().nextInt(possibleHints.size()));
+        this.nonogram[hint[0]][hint[1]].mark();
+        
         return true;
     }
 

@@ -94,14 +94,16 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
-    public void askForHint(Nonogram n) {    
+    public boolean askForHint(Nonogram n) {    
         if (n.askForHint()) {
             Colors.hiprintln("Hint used! Cheeck the your Nonogram", colorFormat);
             if (n.isSolved()) {
                 Colors.hiprintln("Congratulations, you have solved the nonogram with a HINT xd!", colorFormat);
             }
+            return true;
         } else {
             Colors.hiprintln("Hint can't be used, don't have any cell to mark", colorFormat);
+            return false;
         }
     }
 
