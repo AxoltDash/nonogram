@@ -199,39 +199,4 @@ public class Nonogram {
             System.out.println();
         }
     }
-
-    // Print the nonogram
-    public void printState() {
-        System.out.println("Nonogram state:");
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                System.out.print(this.nonogram[i][j].isMarked() ? "X" : this.nonogram[i][j].isHollowMarked() ? "O" : ".");
-            }
-            System.out.println();
-        }
-    }
-
-    // Print the vertical hints
-    public void printVerticalHints() {
-        System.out.println("Vertical hints:");
-        for (int i = 0; i < this.size; i++) {
-            System.out.print("Column " + (i + 1) + ": ");
-            for (int hint : this.verticalHints[i]) {
-                System.out.print(hint + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    // Print the horizontal hints
-    public void printHorizontalHints() {
-        System.out.println("Horizontal hints:");
-        for (int i = 0; i < this.size; i++) {
-            System.out.print("Row " + (i + 1) + ": ");
-            for (int hint : this.horizontalHints[i]) {
-                System.out.print(hint + " ");
-            }
-            System.out.println();
-        }
-    }
 }
