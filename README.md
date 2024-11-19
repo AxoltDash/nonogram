@@ -74,7 +74,7 @@ Before that you can run:
 4. **Solve the puzzle**: Continue marking cells until the puzzle is solved.
 
 ## Class Diagram
-The Terminal mode class diagram was intended to be designed with the Model View Controller pattern!
+The Terminal mode class diagram was intended to be designed with the Model View Controller pattern! But it has Observer and Factory too!
 <div align="center">
     <img src="images/UML_mvc_dark.png" alt="MVC" width="5000"/>
 </div>
