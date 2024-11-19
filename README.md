@@ -73,6 +73,13 @@ Before that you can run:
 3. **Hints**: Use hints if available to help solve the puzzle.
 4. **Solve the puzzle**: Continue marking cells until the puzzle is solved.
 
+## Class Diagram
+The Terminal mode class diagram was intended to be designed with the Model View Controller pattern!
+<div align="center">
+    <img src="images/UML_mvc_dark.png" alt="MVC" width="5000"/>
+</div>
+
+
 ## Repository
 If you want to see the repository of my Github and search my jobs with my user called "[AxoltDash](https://github.com/AxoltDash)", you can follow this [LINK](https://github.com/AxoltDash/nonogram) or scan the following QR (click on it):
 <div align="center">
