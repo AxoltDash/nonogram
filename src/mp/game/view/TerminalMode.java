@@ -1,7 +1,5 @@
 package mp.game.view;
 
-import mp.game.view.StringMaker;
-import mp.game.view.printMaker;
 import mp.game.Player;
 import mp.mappings.*;
 import mp.utils.*;
