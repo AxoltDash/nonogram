@@ -2,8 +2,7 @@ package mp;
 
 import mp.utils.*;
 import mp.game.Game;
-
-import mp.game.view.TerminalMode;
+import mp.game.view.StringMaker;
 
 // =========================================================================
 //  __    _  _______  __    _  _______  _______  ______    _______  __   __ 
@@ -25,7 +24,7 @@ public class Main {
         String colorFormat = "";
 
         //Build a fancy String to show the options
-        String menu = TerminalMode.stringBuildMenu();
+        String menu = StringMaker.stringBuildMenu();
         
         // Ask player name
         Colors.println("If you want to be able to see the response of a Nonogram, you need to put your name as \"admin\" and within the game write the option \"-1\"", Colors.LOW_INTENSITY + Colors.CYAN);
