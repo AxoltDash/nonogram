@@ -42,9 +42,9 @@ This project is a terminal-based implementation of the Nonogram puzzle game. It 
 
 ## How to Run
 
-You need to have installed:
-- [ant](https://ant.apache.org/)
-- [java](https://www.oracle.com/java/technologies/downloads/)
+As a recommendation you should have installed:
+- [Apache Ant](https://ant.apache.org/)
+- [Java 8 or higher](https://www.oracle.com/java/technologies/downloads/) (This proyect are maked on Java 17)
 
 Before that you can run:
 1. **Clone the repository**:
