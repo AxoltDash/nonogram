@@ -1,6 +1,35 @@
-# Nonogram Game
+<div align="center">
 
+# Nonogram Game
+</div>
 This project is a terminal-based implementation of the Nonogram puzzle game. It includes features such as generating Nonogram grids, providing hints, marking cells, and checking if the puzzle is solved. The game is designed to be played in a terminal with various difficulty levels and color-coded outputs.
+
+<div align="center">
+
+## Images
+</div>
+
+### Terminal Mode:
+
+- Welcome to the game!
+<div align="center">
+    <img src="images/term_Welcome.png" alt="Terminal Welcome" width="500"/>
+</div>
+
+- Have lots of fun!
+<div align="center">
+    <img src="images/term_Game.png" alt="Terminal Game" width="500"/>
+</div>
+
+- You don't have any hints!
+<div align="center">
+    <img src="images/term_NoHints.png" alt="Terminal NoHints" width="500"/>
+</div>
+
+- You'ar DEAD!
+<div align="center">
+    <img src="images/term_Dead.png" alt="Terminal Dead" width="500"/>
+</div>
 
 ## Features
 
@@ -13,6 +42,11 @@ This project is a terminal-based implementation of the Nonogram puzzle game. It 
 
 ## How to Run
 
+You need to have installed:
+- [ant](https://ant.apache.org/)
+- [java](https://www.oracle.com/java/technologies/downloads/)
+
+Before that you can run:
 1. **Clone the repository**:
     ```sh
     git clone https://github.com/yourusername/nonogram-game.git
@@ -28,7 +62,10 @@ This project is a terminal-based implementation of the Nonogram puzzle game. It 
     ```sh
     ant run
     ```
-
+4. **Clean the .class files**:
+    ```sh
+    ant clean
+    ```
 ## How to Play
 
 1. **Start the game**: Run the game and follow the prompts to enter your name and select a difficulty level.
