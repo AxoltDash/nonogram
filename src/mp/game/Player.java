@@ -5,10 +5,10 @@ package mp.game;
  * It stores the player's name, score, lives, and hints.
  */
 public class Player {
-    private String name;
     private int score;
     private int lives;
     private int hints;
+    private String name;
 
     /**
      * Constructor for Player.
@@ -66,13 +66,6 @@ public class Player {
      */
     public void addScore(int score) {
         this.score += score;
-    }
-
-    /**
-     * Resets the player's score to 0.
-     */
-    public void resetScore() {
-        this.score = 0;
     }
     
     /**
