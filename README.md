@@ -73,6 +73,14 @@ Before that you can run:
 3. **Hints**: Use hints if available to help solve the puzzle.
 4. **Solve the puzzle**: Continue marking cells until the puzzle is solved.
 
+## Repository
+If you want to see the repository of my Github and search my jobs with my user called "[AxoltDash](https://github.com/AxoltDash)", you can follow this [LINK](https://github.com/AxoltDash/nonogram) or scan the following QR (click on it):
+<div align="center">
+    <a href="https://github.com/AxoltDash/nonogram">
+        <img src="images/qr-code.png" alt="QR" width="200"/>
+    </a>
+</div>
+
 ## Upcoming Features
 
 In the next few days, a graphical interface mode will be added to enhance the user experience.
