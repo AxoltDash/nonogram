@@ -1,6 +1,6 @@
 package mp.game;
 
-import mp.game.view.TerminalMode;
+import mp.game.terminalView.TerminalMode;
 import mp.mappings.Nonogram;
 
 /**

@@ -2,7 +2,7 @@ package mp;
 
 import mp.utils.*;
 import mp.game.Game;
-import mp.game.view.StringMaker;
+import mp.game.terminalView.StringMaker;
 
 // =========================================================================
 //  __    _  _______  __    _  _______  _______  ______    _______  __   __ 

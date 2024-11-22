@@ -1,4 +1,4 @@
-package mp.game.view;
+package mp.game.terminalView;
 
 import mp.game.Player;
 import mp.mappings.*;
