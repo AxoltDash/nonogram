@@ -35,11 +35,8 @@ public class Game {
         if (graphicMode) {
             this.mode = new GraphicMode();
         } else {
-            //Graphic mode build
             this.mode = new TerminalMode(hardMode, colorFormat);
         }
-        
-        // startGame();
     }
 
     /*
