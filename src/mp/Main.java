@@ -2,14 +2,9 @@ package mp;
 
 import mp.utils.*;
 
-import javax.swing.SwingUtilities;
-
 import mp.game.Game;
-import mp.game.Player;
-import mp.game.graphicView.GraphicMode;
 import mp.game.graphicView.InitGraphicMode;
 import mp.game.terminalView.StringMaker;
-import mp.mappings.Nonogram;
 
 // =========================================================================
 //  __    _  _______  __    _  _______  _______  ______    _______  __   __ 
@@ -39,7 +34,9 @@ public class Main {
 // ==========================================================================
         if (mode == 1){
             InitGraphicMode init = new InitGraphicMode();
-            init.printTest();
+            Game game = new Game(true, init.getSize(), "", init.getName());
+            game.startGame();
+
 
 // __                      __             __                      __       
 // |  |_.-----.----.--------|__.-----.---.-|  |  .--------.-----.--|  .-----.
@@ -84,7 +81,7 @@ public class Main {
                 }
 
                 if (option != 0) {
-                    Game game = new Game(option*5, colorFormat, name);
+                    Game game = new Game(false, option*5, colorFormat, name);
                     game.startGame();
                 }
 

@@ -10,7 +10,7 @@ import mp.mappings.Nonogram;
 public class Game {
     private boolean hardMode;
     private Player player;
-    private TerminalMode terminal;
+    private TerminalMode mode;
     private Nonogram nonogram;
 
     /*
@@ -20,7 +20,7 @@ public class Game {
      * @param colorFormat Color format for the terminal
      * @param name        Name of the player
      */
-    public Game(int size, String colorFormat, String name) {
+    public Game(boolean graphicMode, int size, String colorFormat, String name) {
         this.player = new Player(name);
         this.nonogram = new Nonogram(size);
 
@@ -31,8 +31,12 @@ public class Game {
             player.setHints(0);
         }
 
-        //Terminal mode build
-        this.terminal = new TerminalMode(hardMode, colorFormat);
+        if (graphicMode) {
+            // this.mode = new GraphicMode(nonogram, player);
+        } else {
+            //Graphic mode build
+            this.mode = new TerminalMode(hardMode, colorFormat);
+        }
         
         // startGame();
     }
@@ -44,7 +48,7 @@ public class Game {
         boolean gameContinue = true;
         int option;
         do {
-            option = terminal.showAndAsk(hardMode, nonogram, player);
+            option = mode.showAndAsk(hardMode, nonogram, player);
 
             switch (option) {
                 case -1:
@@ -55,20 +59,20 @@ public class Game {
                     }
                     break;
                 case 1:
-                    gameContinue = terminal.markCell(false, nonogram, player);
+                    gameContinue = mode.markCell(false, nonogram, player);
                     break;
                 case 2:
-                    gameContinue = terminal.markCell(true, nonogram, player);
+                    gameContinue = mode.markCell(true, nonogram, player);
                     break;
                 case 3:
                     // I know this is not the best way to do it :p
                     if (!hardMode) {
                         if (player.getHints() > 0) {
-                            if (terminal.askForHint(nonogram)) {
+                            if (mode.askForHint(nonogram)) {
                                 player.useHint();
                             }
                         } else {
-                            terminal.printNoHints();
+                            mode.printNoHints();
                         }
                     }
                     break;
@@ -82,6 +86,6 @@ public class Game {
             }
 
         } while (gameContinue);
-        terminal.printEndGame(nonogram, player);
+        mode.printEndGame(nonogram, player);
     }
 }

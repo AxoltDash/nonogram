@@ -1,37 +1,24 @@
 package mp.game.graphicView;
 
 import javax.swing.*;
-import java.awt.*;
-
-import mp.game.Player;
-import mp.mappings.Nonogram;
 
 public class InitGraphicMode {
+    
     private int size;
-    private boolean hardMode;
-    private Player player;
-    private Nonogram nonogram;
+    private String name;
 
     public InitGraphicMode() {
         askName();
         selectDifficulty();
-
-        nonogram = new Nonogram(size);
-
-        if (size == 5 || size == 10) {
-            hardMode = false;
-        } else {
-            hardMode = true;
-            player.setHints(0);
-        }
     }
+    
     //Ask the name of the player
-    public void askName() {
-        String name = JOptionPane.showInputDialog("Enter your name: ");
-        player = new Player(name);
+    private void askName() {
+        name = JOptionPane.showInputDialog("Enter your name: ");
     }
 
-    public void selectDifficulty() {
+    //Select the difficulty of the game
+    private void selectDifficulty() {
         String[] options = {"Easy (5x5)", "Medium (10x10)", "Hard (15x15) no HINTS"};
 
         int selection = JOptionPane.showOptionDialog(
@@ -53,10 +40,11 @@ public class InitGraphicMode {
         };
     }
 
-    //test prints
-    public void printTest() {
-        System.out.println(this.size);
-        System.out.println(this.hardMode);
-        System.out.println(this.player.getName());
+    public int getSize() {
+        return size;
+    }
+
+    public String getName() {
+        return name;
     }
 }
