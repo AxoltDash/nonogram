@@ -1,5 +1,6 @@
 package mp.game;
 
+import mp.game.graphicView.GraphicMode;
 import mp.game.terminalView.TerminalMode;
 import mp.mappings.Nonogram;
 
@@ -10,7 +11,7 @@ import mp.mappings.Nonogram;
 public class Game {
     private boolean hardMode;
     private Player player;
-    private TerminalMode mode;
+    private Mode mode;
     private Nonogram nonogram;
 
     /*
@@ -32,7 +33,7 @@ public class Game {
         }
 
         if (graphicMode) {
-            // this.mode = new GraphicMode(nonogram, player);
+            this.mode = new GraphicMode();
         } else {
             //Graphic mode build
             this.mode = new TerminalMode(hardMode, colorFormat);

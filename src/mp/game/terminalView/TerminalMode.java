@@ -1,5 +1,7 @@
 package mp.game.terminalView;
 
+import mp.game.Mode;
+
 import mp.game.Player;
 import mp.mappings.*;
 import mp.utils.*;
@@ -8,7 +10,7 @@ import mp.utils.*;
  * The TerminalMode class handles the terminal-based user interface for the Nonogram game.
  * It provides methods to display the game state, show menus, and interact with the player.
  */
-public class TerminalMode {
+public class TerminalMode implements Mode {
     private String colorFormat;
     private String equalLine;
     private String menu;
@@ -39,6 +41,7 @@ public class TerminalMode {
      * @param player Player object representing the current player.
      * @return The option selected by the user.
      */
+    @Override
     public int showAndAsk (boolean hardMode, Nonogram n, Player player) {
         printGameState(false, n, player);
 
@@ -59,6 +62,7 @@ public class TerminalMode {
      * @param player Player object.
      * @return A boolean to know if the game continues.
      */
+    @Override
     public boolean markCell(boolean hollow, Nonogram n, Player player) {
         int size = n.getSize();
         int points;
@@ -111,6 +115,7 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
+    @Override
     public boolean askForHint(Nonogram n) {  
         printEqualLine();
         if (n.askForHint()) {
@@ -125,7 +130,7 @@ public class TerminalMode {
         }
     }
     
-    public int[] coords(int size){
+    private int[] coords(int size){
         return ConsoleGets.getCoordinates(size,
             Colors.hiToString("Enter the column number \"" + 1 + " - " + size +"\" "+ Colors.hiToString("(columna)", colorFormat), Colors.CYAN), 
             Colors.hiToString("Enter the row number \"" + 1 + " - " + size + "\" "+ Colors.hiToString("(fila)", colorFormat), Colors.CYAN), 
@@ -138,7 +143,7 @@ public class TerminalMode {
 // |    |  \ | | \|  |  ___]   
 // ==========================
 
-    public void printStatus(Player player) {
+    private void printStatus(Player player) {
         Colors.hiprint("[%%] - ", colorFormat);
         Colors.hiprint("Your current score is: ");
         Colors.hiprintln(player.getScore() + " points", colorFormat);
@@ -156,7 +161,7 @@ public class TerminalMode {
      * @param n Nonogram object.
      * @param player Player object.
      */
-    public void printGameState(boolean isSolved, Nonogram n, Player player) {
+    private void printGameState(boolean isSolved, Nonogram n, Player player) {
         int size = n.getSize();
         String line = Colors.hiToString("|", colorFormat);
 
@@ -232,19 +237,21 @@ public class TerminalMode {
     /*
      * Method to print a dead message.
      */
-    public void printDeadMessage() {
+    private void printDeadMessage() {
         Colors.hiprintln("_  _ ____ _  _ . ____ ____    ___  ____ ____ ___      .-.", colorFormat);
         Colors.hiprintln("\\_/  |  | |  | ' |__| |__/    |  \\ |___ |__| |  \\    (0.0)", colorFormat);
         Colors.hiprintln(" |   |__| |__|   |  | |  \\    |__/ |___ |  | |__/  '=.|m|.='", colorFormat);
         Colors.hiprintln("-------------------------------------------------  .='`\"`'=.", colorFormat);                    
     }
 
-    public void printEqualLine() {
+    private void printEqualLine() {
         System.out.println(equalLine);
     }
+
     /*
      * Method to print a message when the user doesn't have any hints.
      */
+    @Override
     public void printNoHints() {
         Colors.hiprint(" _._     _,-'\"\"`-._");
         Colors.hiprintln("   - You don't have any hints!", colorFormat);
@@ -260,6 +267,7 @@ public class TerminalMode {
      * 
      * @param player Player object.
      */
+    @Override
     public void printEndGame(Nonogram n, Player player) {
         printGameState(true, n, player);
 
