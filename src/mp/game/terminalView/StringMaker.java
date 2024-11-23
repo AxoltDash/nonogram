@@ -84,4 +84,14 @@ public class StringMaker {
         }  
         return sb.toString(); 
     }
+
+    public static String modeString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Colors.hiToString("Select the mode you want to play: "));
+        sb.append("\n");
+        sb.append(Colors.hiToString("0. Terminal mode", Colors.CYAN));
+        sb.append("\n");
+        sb.append(Colors.hiToString("1. Graphical mode", Colors.CYAN));
+        return sb.toString();
+    }
 }
