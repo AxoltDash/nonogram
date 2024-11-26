@@ -125,7 +125,7 @@ public class GraphicMode extends JFrame {
             
             updateGame(player, n);
         } else if (eleccion == 1) {
-            correct = n.markCell(i, j);
+            correct = n.markHollowCell(i, j);
             player.addScore(50);
 
             updateGame(player, n);
