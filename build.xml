@@ -110,10 +110,7 @@
     <target name="erase" description="cleans up json">
         <!-- Delete the ${build} and ${dist} directory trees -->
         <delete>
-            <fileset dir="." includes="**/clientes.json" defaultexcludes="false" />
-            <fileset dir="." includes="**/empleados*.json" defaultexcludes="false" />
-            <fileset dir="." includes="**/reporte.json" defaultexcludes="false" />
-            <fileset dir="." includes="**/turnos.json" defaultexcludes="false" />
+            <fileset dir="." includes="**/file.json" defaultexcludes="false" />
         </delete>
     </target>
 
