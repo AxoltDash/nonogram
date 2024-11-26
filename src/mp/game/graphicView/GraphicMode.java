@@ -108,8 +108,8 @@ public class GraphicMode extends JFrame {
         String[] options = {"Filled", "Void", "Cancel"};
         int eleccion = JOptionPane.showOptionDialog(
             this,
-            "Selecciona el estado de la celda:",
-            "Marcar Celda",
+            "Select cell state:",
+            "Matk Cell",
             JOptionPane.DEFAULT_OPTION,
             JOptionPane.INFORMATION_MESSAGE,
             null,
@@ -121,11 +121,13 @@ public class GraphicMode extends JFrame {
         
         if (eleccion == 0){
             correct = n.markCell(i, j);
+            n.fillCells(i, j);
             player.addScore(100);
-            
+    
             updateGame(player, n);
         } else if (eleccion == 1) {
             correct = n.markHollowCell(i, j);
+            n.fillCells(i, j);
             player.addScore(50);
 
             updateGame(player, n);
