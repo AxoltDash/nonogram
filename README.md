@@ -31,6 +31,11 @@ This project is a terminal-based implementation of the Nonogram puzzle game. It 
     <img src="images/term_Dead.png" alt="Terminal Dead" width="500"/>
 </div>
 
+### Graphical mode
+<div align="center">
+    <img src="images/graphical.png" alt="Terminal Dead" width="500"/>
+</div>
+
 ## Features
 
 - **Nonogram Grid Generation**: Automatically generates Nonogram grids of different sizes.
@@ -87,10 +92,6 @@ If you want to see the repository of my Github and search my jobs with my user c
         <img src="images/qr-code.png" alt="QR" width="200"/>
     </a>
 </div>
-
-## Upcoming Features
-
-In the next few days, a graphical interface mode will be added to enhance the user experience.
 
 ## License
 
