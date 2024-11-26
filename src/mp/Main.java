@@ -35,7 +35,6 @@ public class Main {
         if (mode == 1){
             InitGraphicMode init = new InitGraphicMode();
             Game game = new Game(true, init.getSize(), "", init.getName());
-            game.startGame();
 
 
 // __                      __             __                      __       

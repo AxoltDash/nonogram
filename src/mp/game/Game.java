@@ -1,5 +1,7 @@
 package mp.game;
 
+import javax.swing.SwingUtilities;
+
 import mp.game.graphicView.GraphicMode;
 import mp.game.terminalView.TerminalMode;
 import mp.mappings.Nonogram;
@@ -12,6 +14,7 @@ public class Game {
     private boolean hardMode;
     private Player player;
     private Mode mode;
+    private GraphicMode graphic;
     private Nonogram nonogram;
 
     /*
@@ -33,7 +36,15 @@ public class Game {
         }
 
         if (graphicMode) {
-            this.mode = new GraphicMode();
+            if (player.getName().equals("admin")) {
+                System.out.println("=== Cheat activated, omg! ===");
+                nonogram.printNonogramSolution();
+                System.out.println("=============================");
+            }
+            SwingUtilities.invokeLater(() -> {
+                this.graphic = new GraphicMode(size, nonogram, player);
+                this.graphic.setVisible(true);
+            });
         } else {
             this.mode = new TerminalMode(hardMode, colorFormat);
         }
