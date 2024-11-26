@@ -2,6 +2,9 @@ package mp.game.graphicView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import mp.game.Player;
 import mp.mappings.*;
 
@@ -142,48 +145,45 @@ public class GraphicMode extends JFrame {
      * @param n the Nonogram game instance
      */
     private void managementCell(JButton b, int i, int j, Player player, Nonogram n) {
-        String[] options = {"Filled", "Void", "Cancel"};
-        int eleccion = JOptionPane.showOptionDialog(
-            this,
-            "Select cell state:",
-            "Mark Cell",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.INFORMATION_MESSAGE,
-            null,
-            options,
-            options[0]
-        );
+        b.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                boolean correct = true;
 
-        boolean correct = true;
+                if (e.getButton() == MouseEvent.BUTTON1 && !e.isShiftDown()) {
+                    correct = n.markCell(i, j);
+                    n.fillCells(i, j);
+                    player.addScore(100);
 
-        if (eleccion == 0) {
-            correct = n.markCell(i, j);
-            n.fillCells(i, j);
-            player.addScore(100);
+                    updateGame(player, n);
+                } else if (e.getButton() == MouseEvent.BUTTON1 && e.isShiftDown()) {
+                    correct = n.markHollowCell(i, j);
+                    n.fillCells(i, j);
+                    player.addScore(50);
 
-            updateGame(player, n);
-        } else if (eleccion == 1) {
-            correct = n.markHollowCell(i, j);
-            n.fillCells(i, j);
-            player.addScore(50);
+                    updateGame(player, n);
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    correct = n.markHollowCell(i, j);
+                    n.fillCells(i, j);
+                    player.addScore(50);
 
-            updateGame(player, n);
-        } else {
-            return;
-        }
+                    updateGame(player, n);
+                }
 
-        if (!correct) {
-            player.loseLife();
-            JOptionPane.showMessageDialog(this, "You have lost a life, you have " + player.getLives() + " lives left");
-        }
+                if (!correct) {
+                    player.loseLife();
+                    JOptionPane.showMessageDialog(null, "You have lost a life, you have " + player.getLives() + " lives left");
+                }
 
-        if (n.isSolved()) {
-            JOptionPane.showMessageDialog(this, "Congratulations " + player.getName() + ", you have solved the nonogram");
-            System.exit(0);
-        } else if (player.getLives() <= 0) {
-            JOptionPane.showMessageDialog(this, "You have lost all your lives, GAME OVER");
-            System.exit(0);
-        }
+                if (n.isSolved()) {
+                    JOptionPane.showMessageDialog(null, "Congratulations " + player.getName() + ", you have solved the nonogram");
+                    System.exit(0);
+                } else if (player.getLives() <= 0) {
+                    JOptionPane.showMessageDialog(null, "You have lost all your lives, GAME OVER");
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     /**
