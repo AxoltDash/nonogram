@@ -11,12 +11,14 @@ public class GraphicMode extends JFrame {
     private JLabel jlHints;
     private JLabel jlScore;
 
-    public GraphicMode(int size, Nonogram n, Player player) {
+    public GraphicMode(Nonogram n, Player player) {
         setTitle("Nonogram");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900,900);
         setLocationRelativeTo(null);
-
+        
+        int size = n.getSize();
+        
         this.buttonsNonogram = new JButton[size][size];
         this.jlLives = new JLabel("Lives: " + player.getLives());
         this.jlHints = new JLabel("Hints: " + player.getHints());
