@@ -11,7 +11,6 @@ public class InitGraphicMode {
         JOptionPane.showMessageDialog(null, "If you want to be able to see the response of a Nonogram, you need to put your name as \"admin\" and check the terminal for the response.");
         askName();
         selectDifficulty();
-        JOptionPane.showMessageDialog(null, "INSTRUCTIONS:\n- \"Click\" on a cell to mark it\n- \"Click+Shift\" or \"RighClick\" on a cell to mark it as hollow");
     }
     
     //Ask the name of the player
